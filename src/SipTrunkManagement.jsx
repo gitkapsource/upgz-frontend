@@ -39,8 +39,9 @@ function App() {
 
   const handleSave = async (record) => {
     try {
-      if (record.Id) {
-        await api.put("/siptrunks", { ...record, SIPTrunkID: record.SipTrunkID });
+      if (record.SIPTrunkID) {
+    	console.log("Editing SIP Trunk:", record.SIPTrunkID); // 👈 Debug log
+        await api.put("/siptrunk_update", { ...record, SIPTrunkID: record.SIPTrunkID });
       } else {
         await api.post("/siptrunks", record);
       }

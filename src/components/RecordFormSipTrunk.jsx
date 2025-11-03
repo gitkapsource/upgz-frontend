@@ -9,6 +9,8 @@ import {
   Grid,
 } from "@mui/material";
 
+//const readOnlyFields = ["SIPTrunkID"];
+
 export default function RecordFormSipTrunk({ record, onSave, onClose }) {
   const [form, setForm] = useState({
     SIPTrunkID: "",

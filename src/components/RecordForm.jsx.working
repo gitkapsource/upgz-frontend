@@ -1,0 +1,63 @@
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Button,
+  Grid,
+} from "@mui/material";
+
+export default function RecordForm({ record, onSave, onClose }) {
+  const [form, setForm] = useState({
+    PhoneNumber: "",
+    IncomingSIPTrunkID: "",
+    OutgoingSIPTrunkID: "",
+    FallbackSIPTrunkID: "",
+    FallbackPhoneNumber: "",
+    Status: "",
+    Description: "",
+  });
+
+  useEffect(() => {
+    if (record) setForm(record);
+  }, [record]);
+
+  if (!record) return null;
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <Dialog open={!!record} onClose={onClose} fullWidth>
+      <DialogTitle>
+        {record.Id ? "Edit Record" : "Add Record"}
+      </DialogTitle>
+      <DialogContent>
+        <Grid container spacing={2} sx={{ mt: 1 }}>
+          {Object.keys(form).map((key) => (
+            <Grid item xs={12} sm={6} key={key}>
+              <TextField
+                label={key}
+                name={key}
+                value={form[key] ?? ""}
+                onChange={handleChange}
+                fullWidth
+                variant="standard"
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button variant="contained" onClick={() => onSave(form)}>
+          Save
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
